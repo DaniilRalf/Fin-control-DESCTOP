@@ -7,3 +7,10 @@
 Если у Вас стоит операционная система Windows то необходимо прочитать данную статью - 
    [ссылка на материал](https://stackoverflow.com/questions/2532234/how-to-run-a-makefile-in-windows) \
 3) 
+
+
+
+
+
+
+доп. инфа по сборке - [ссылка](https://polyakovdmitriy.ru/create-react-app-electron/)

@@ -2,7 +2,15 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.scss';
 
+const electron = window.require('electron');
+const ipcRenderer  = electron.ipcRenderer;
+
 function App() {
+
+  console.log('===========================')
+  console.log(ipcRenderer)
+  console.log('===========================')
+
   return (
     <div className="App">
       <header className="App-header">
