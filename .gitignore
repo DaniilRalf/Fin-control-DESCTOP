@@ -1,6 +1,6 @@
 #MAIN===================================
 /.idea
-/common/build
+/common/dist
 /common/node_modules
 
 #REACT-APPLICATION======================
@@ -24,3 +24,4 @@
 
 #ELECTRON===============================
 /electron/node_modules
+/electron/build

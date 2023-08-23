@@ -1,7 +1,8 @@
 import React from 'react'
 import './App.scss'
-import HomeComponent from "./components/home/home.component";
-import {ElectronBus} from "./helpers/electron-bus";
+import HomeComponent from "./components/home/home.component"
+import {ElectronBus} from "./helpers/electron-bus"
+import {ElectronEventsEnum} from "common/dist";
 
 export const electronBusObject = new ElectronBus()
 electronBusObject.electron = window.require('electron')
@@ -15,7 +16,7 @@ function App(): JSX.Element {
 
 
   const test = async (): Promise<void> => {
-    await electronBusObject.ipcRendererElectron.invoke('test', 'asdasd', 'asdasd')
+    await electronBusObject.ipcRendererElectron.invoke(ElectronEventsEnum.IncomeSave, 'asdasd', 'asdasd')
   }
   test().then()
 

@@ -1,3 +1,24 @@
 .income {
 
+  &_heading {
+    margin-left: 5px;
+  }
+
+  &_body {
+
+    &_add {
+      margin-top: 15px;
+      //Button custom==================================
+      button:global(.ant-btn) {
+        border: none;
+        font-size: 14px;
+
+        background: linear-gradient(315deg, #5b5e74, #4d4f61);
+        box-shadow:  -5px -5px 10px #515467,
+        5px 5px 10px #464957;
+      }
+    }
+
+  }
+
 }

@@ -5,34 +5,35 @@
 
   display: flex;
 
-  &_menu {}
+  &_menu {
+    margin-right: 20px;
 
-  &_content {
-    width: 100%;
-  }
-
-
-  //Menu custom==================================
-  button:global(.ant-btn) {
-    width: 72px!important;
-    height: 40px!important;
-    border: none;
-
-    background: linear-gradient(315deg, #5b5e74, #4d4f61);
-    box-shadow:  -5px -5px 10px #515467,
-    5px 5px 10px #464957;
-  }
-  :global(.ant-menu) {
-    background-color: transparent!important;
-    border: none!important;
-
-    :global(.ant-menu-item) {
-      margin: 4px 0!important;
+    //Menu custom==================================
+    button:global(.ant-btn) {
+      width: 72px!important;
+      height: 40px!important;
+      border: none;
 
       background: linear-gradient(315deg, #5b5e74, #4d4f61);
       box-shadow:  -5px -5px 10px #515467,
       5px 5px 10px #464957;
     }
+    :global(.ant-menu) {
+      background-color: transparent!important;
+      border: none!important;
+
+      :global(.ant-menu-item) {
+        margin: 4px 0!important;
+
+        background: linear-gradient(315deg, #5b5e74, #4d4f61);
+        box-shadow:  -5px -5px 10px #515467,
+        5px 5px 10px #464957;
+      }
+    }
+  }
+
+  &_content {
+    width: 100%;
   }
 
 }

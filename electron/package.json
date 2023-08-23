@@ -2,13 +2,17 @@
   "name": "electron",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "build/index.js",
   "author": "",
   "license": "ISC",
   "scripts": {
+    "build": "tsc",
     "start": "electron ."
   },
   "devDependencies": {
-    "electron": "^26.0.0"
+    "electron": "^26.0.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
   }
 }

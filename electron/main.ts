@@ -1,6 +1,8 @@
+// const preloadApp = require('./preload')
 const {app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const url = require ('url')
+const {ElectronEventsEnum} = require("common/dist");
 
 
 const createWindow = () => {
@@ -10,7 +12,7 @@ const createWindow = () => {
         height: 600,
         autoHideMenuBar: true, /** auto hidden settings-menu from top */
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            // preload: preloadApp(),
             nodeIntegration: true,
             contextIsolation: false /** отключаем изоляцию от глобального обьекта window, теперь у него будет поле 'electron'*/
         }
@@ -34,7 +36,7 @@ app.whenReady().then(() => {
     createWindow()
 
     /** events */
-    ipcMain.handle('test', async (event, ...args) => {
+    ipcMain.handle(ElectronEventsEnum.IncomeSave, async (event: any, ...args: any) => {
         console.log('=============================')
         console.log(event)
         console.log(args)
