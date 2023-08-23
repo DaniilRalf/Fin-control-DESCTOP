@@ -1,5 +1,7 @@
 #MAIN===================================
 /.idea
+/common/dist
+/common/node_modules
 
 #REACT-APPLICATION======================
 # dependencies
