@@ -1,6 +1,6 @@
 
 #Development command=========================
-DEV_PORT = 3003
+DEV_PORT = 3000
 DEV_START_URL = http://localhost:$(DEV_PORT)
 
 start-dev-application:

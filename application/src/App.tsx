@@ -1,18 +1,29 @@
 import React from 'react'
 import './App.scss'
+import HomeComponent from "./components/home/home.component";
+import {ElectronBus} from "./helpers/electron-bus";
 
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
+export const electronBusObject = new ElectronBus()
+electronBusObject.electron = window.require('electron')
+electronBusObject.ipcRendererElectron = electronBusObject.electron.ipcRenderer
 
-function App() {
+function App(): JSX.Element {
 
-  // console.log('===========================')
-  // console.log(ipcRenderer)
-  // console.log('===========================')
+  console.log('===========================')
+  console.log(electronBusObject.ipcRendererElectron)
+  console.log('===========================')
+
+
+  const test = async (): Promise<void> => {
+    await electronBusObject.ipcRendererElectron.invoke('test', 'asdasd', 'asdasd')
+  }
+  test().then()
+
+
 
   return (
     <div className="App">
-      app-start
+      <HomeComponent></HomeComponent>
     </div>
   )
 }
