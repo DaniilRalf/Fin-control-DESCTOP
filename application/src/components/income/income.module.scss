@@ -1,4 +1,6 @@
 .income {
+  height: calc(100vh - 40px);
+  overflow-y: auto;
 
   &_heading {
     margin-left: 5px;
@@ -7,18 +9,58 @@
   &_body {
 
     &_add {
-      margin-top: 15px;
+      margin: 35px 0 35px 0;
+      display: flex;
+      align-items: center;
+
       //Button custom==================================
       button:global(.ant-btn) {
         border: none;
         font-size: 14px;
+        margin-right: 25px;
 
         background: linear-gradient(315deg, #5b5e74, #4d4f61);
         box-shadow:  -5px -5px 10px #515467,
         5px 5px 10px #464957;
       }
+
+      p {
+        font-size: 32px;
+        font-weight: bold;
+        margin: 0;
+        color: white;
+      }
+
+
     }
 
+    &_list {
+
+      &_item {
+        width: 100%;
+        margin-bottom: 10px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        input:global(.ant-input) {
+          width: 32%;
+          color: white;
+          border: none;
+          font-size: 14px;
+          margin-right: 25px;
+
+          background: linear-gradient(315deg, #6d708a, #55576b);
+          box-shadow:  -2px -2px 10px #515467,
+          5px 5px 10px #464957;
+        }
+
+        &_icon {
+          color: white!important;
+        }
+      }
+    }
   }
 
 }
