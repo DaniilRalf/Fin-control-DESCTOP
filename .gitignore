@@ -1,6 +1,6 @@
 #MAIN===================================
 /.idea
-/common/dist
+/common/build
 /common/node_modules
 
 #REACT-APPLICATION======================
