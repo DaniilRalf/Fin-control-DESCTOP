@@ -3,13 +3,13 @@ import {Button, Input} from "antd"
 import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
 import {ElectronEventsEnum, IncomeInterface} from "common/dist"
 import {useEffect, useState} from "react"
-import {useDispatch} from "react-redux"
-import {setIncomeCache} from "../../store/slices/electron-cache.slice"
+// import {useDispatch} from "react-redux"
+// import {setIncomeCache} from "../../store/slices/electron-cache.slice"
 import {electronBusObject} from "../../App";
 
 const IncomeComponent = (): JSX.Element => {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const [incomeList, setIncomeList] = useState<IncomeInterface[]>([])
     const [allQuantity, setAllQuantity] = useState<number>(0)
 
@@ -27,7 +27,7 @@ const IncomeComponent = (): JSX.Element => {
         })
         setAllQuantity(newAllQuantity)
         /** save in store and get to electron*/
-        dispatch(setIncomeCache({data: incomeList}))
+        // dispatch(setIncomeCache({data: incomeList}))
         if (incomeList) {
             electronBusObject.electronEvents<IncomeInterface[]>(ElectronEventsEnum.CacheIncomeSave, incomeList).then()
         }

@@ -1,0 +1,15 @@
+.outcome {
+  height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding-left: 10px;
+
+  &_heading {
+    margin-left: 5px;
+  }
+
+  &_body {
+    margin-left: 5px;
+  }
+
+
+}

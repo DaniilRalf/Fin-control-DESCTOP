@@ -2,7 +2,7 @@ import style from './home.module.scss'
 import {useEffect, useState} from 'react'
 import {
     ContainerOutlined,
-    DesktopOutlined,
+    DesktopOutlined, ExportOutlined, ImportOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     PieChartOutlined,
@@ -12,6 +12,7 @@ import {Button, Menu} from 'antd'
 import TooltipComponent from "../../UI/popover/tooltipComponent"
 import {Route, Routes, useNavigate} from "react-router-dom"
 import IncomeComponent from "../income/income.component"
+import OutcomeComponent from "../outcome/outcome.component";
 
 
 type MenuItem = Required<MenuProps>['items'][number]
@@ -33,8 +34,8 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem('Доходы', '1', <PieChartOutlined/>),
-    getItem('Option 2', '2', <DesktopOutlined/>),
+    getItem('Доходы', '1', <ImportOutlined />),
+    getItem('Расходы', '2', <ExportOutlined />),
     getItem('Option 3', '3', <ContainerOutlined/>),
 ]
 
@@ -54,8 +55,8 @@ const HomeComponent = (): JSX.Element => {
     }
 
     const onNavigate = (menuIndex: string): void => {
-        if (menuIndex === '1') navigate('/')
-        else if (menuIndex === '2') navigate('/test2')
+        if (menuIndex === '1') navigate('/income')
+        else if (menuIndex === '2') navigate('/outcome')
         else if (menuIndex === '3') navigate('/test3')
     }
 
@@ -86,8 +87,8 @@ const HomeComponent = (): JSX.Element => {
 
             <div className={style.home_content}>
                 <Routes>
-                    <Route path='/*' index element={<IncomeComponent/>}></Route>
-                    <Route path='test2/*'></Route>
+                    <Route path='income/*' index element={<IncomeComponent/>}></Route>
+                    <Route path='outcome/*' element={<OutcomeComponent/>}></Route>
                     <Route path='test3/*'></Route>
                 </Routes>
             </div>

@@ -1,4 +1,4 @@
-export class ElectronBus {
+export class ElectronBusService {
 
     /** global electron object */
     public electron: any

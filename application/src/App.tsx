@@ -1,9 +1,9 @@
 import React from 'react'
 import './App.scss'
 import HomeComponent from "./components/home/home.component"
-import {ElectronBus} from "./helpers/electron-bus"
+import {ElectronBusService} from "./helpers/electron-bus.service"
 
-export const electronBusObject = new ElectronBus()
+export const electronBusObject = new ElectronBusService()
 electronBusObject.electron = window.require('electron')
 electronBusObject.ipcRendererElectron = electronBusObject.electron.ipcRenderer
 
