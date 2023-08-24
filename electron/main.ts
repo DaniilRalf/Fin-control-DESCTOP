@@ -1,9 +1,11 @@
 // const preloadApp = require('./preload')
-const {app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
-const url = require ('url')
-const {ElectronEventsEnum} = require("common/dist");
+const url = require('url')
+const {app, BrowserWindow, ipcMain} = require('electron')
+const {ElectronEventsEnum, CacheEventEnum} = require("common/dist")
+const ElectronStore = require('electron-store')
 
+const electronStore = new ElectronStore()
 
 const createWindow = () => {
     /** Create the browser window */
@@ -20,10 +22,10 @@ const createWindow = () => {
 
     /** Load the index.html or the local host */
     const startUrl = process.env.ELECTRON_START_URL || url.format({
-            pathname: path.join(__dirname, '../application/build/index.html'),
-            protocol: 'file:',
-            slashes: true
-        })
+        pathname: path.join(__dirname, '../application/build/index.html'),
+        protocol: 'file:',
+        slashes: true
+    })
     mainWindow.loadURL(startUrl).then()
 }
 
@@ -32,20 +34,18 @@ const createWindow = () => {
  * Некоторые API-интерфейсы могут быть использованы только после наступления этого события.
  * */
 app.whenReady().then(() => {
-
     createWindow()
-
-    /** events */
-    ipcMain.handle(ElectronEventsEnum.IncomeSave, async (event: any, ...args: any) => {
-        console.log('=============================')
-        console.log(event)
-        console.log(args)
-        console.log('=============================')
-    })
-
     app.on('activate', () => {
         /** В Mac-OS обычно повторно создается окно в приложении, когда щелкается значок dock, а другие открытые окна отсутствуют */
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    })
+
+    /** events */
+    ipcMain.handle(ElectronEventsEnum.CacheIncomeSave, async (_event: any, arg: any) => {
+        electronStore.set(CacheEventEnum.Income, arg);
+    })
+    ipcMain.handle(ElectronEventsEnum.CacheIncomeGet, async (_event: any, _arg: any) => {
+        return electronStore.get(CacheEventEnum.Income)
     })
 })
 

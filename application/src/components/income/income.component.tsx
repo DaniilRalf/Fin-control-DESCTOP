@@ -1,25 +1,36 @@
 import style from './income.module.scss'
 import {Button, Input} from "antd"
 import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
-import {IncomeInterface} from "common/dist";
-import {ChangeEvent, useEffect, useState} from "react";
+import {ElectronEventsEnum, IncomeInterface} from "common/dist"
+import {useEffect, useState} from "react"
+import {useDispatch} from "react-redux"
+import {setIncomeCache} from "../../store/slices/electron-cache.slice"
+import {electronBusObject} from "../../App";
 
 const IncomeComponent = (): JSX.Element => {
 
-    const test: IncomeInterface[] = [
-        {name: 'Salary', owner: 'Daniil', quantity: 140000},
-        {name: 'Salary2', owner: 'Daniil', quantity: 140000},
-        {name: 'Salary3', owner: 'Daniil', quantity: 140000},
-    ]
-    const [incomeList, setIncomeList] = useState<IncomeInterface[]>(test)
+    const dispatch = useDispatch()
+    const [incomeList, setIncomeList] = useState<IncomeInterface[]>([])
     const [allQuantity, setAllQuantity] = useState<number>(0)
+
+    useEffect(() => {
+        electronBusObject.electronEvents<null>(ElectronEventsEnum.CacheIncomeGet, null).then((res: IncomeInterface[]) => {
+            setIncomeList(res)
+        })
+    }, [])
+
     useEffect(() => {
         /** generate allQuantity */
         let newAllQuantity: number = 0
-        incomeList.forEach((item: IncomeInterface) => {
+        incomeList?.forEach((item: IncomeInterface) => {
             newAllQuantity += Number(item.quantity)
         })
         setAllQuantity(newAllQuantity)
+        /** save in store and get to electron*/
+        dispatch(setIncomeCache({data: incomeList}))
+        if (incomeList) {
+            electronBusObject.electronEvents<IncomeInterface[]>(ElectronEventsEnum.CacheIncomeSave, incomeList).then()
+        }
     }, [incomeList])
 
 
@@ -43,15 +54,15 @@ const IncomeComponent = (): JSX.Element => {
     }
 
 
-
     const constructIncomeList: JSX.Element[] = incomeList.map((item: IncomeInterface, index: number) => {
         return (
             <div className={style.income_body_list_item} key={index}>
                 <Input value={item.name} onChange={(event) => changeIncomeList(event.target.value, 'name', index)}/>
                 <Input value={item.owner} onChange={(event) => changeIncomeList(event.target.value, 'owner', index)}/>
-                <Input value={item.quantity} onChange={(event) => changeIncomeList(event.target.value, 'quantity', index)}/>
+                <Input value={item.quantity}
+                       onChange={(event) => changeIncomeList(event.target.value, 'quantity', index)}/>
                 <DeleteOutlined className={style.income_body_list_item_icon}
-                                onClick={() => removeIncomeList(index)} />
+                                onClick={() => removeIncomeList(index)}/>
             </div>
         )
     })

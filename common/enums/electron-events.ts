@@ -1,3 +1,5 @@
 export enum ElectronEventsEnum {
-    IncomeSave = 'income:save',
+
+    CacheIncomeSave = 'cache-income:save',
+    CacheIncomeGet = 'cache-income:get',
 }

@@ -1,16 +1,20 @@
 import {createSlice} from "@reduxjs/toolkit"
+import {IncomeInterface} from "common/dist"
+import _ from 'lodash';
 
 const electronCacheSlice = createSlice({
     name: 'electronCacheSlice',
     initialState: {
-        data: null
-    } as {data: any},
+        income: []
+    } as {
+        income: IncomeInterface[]
+    },
     reducers: {
-        setCache: (state, action) => {
-            state.data = action.payload
+        setIncomeCache: (state, action) => {
+            state.income = _.cloneDeep(action.payload.data)
         },
     }
 })
 
-export const { setCache } = electronCacheSlice.actions
+export const { setIncomeCache } = electronCacheSlice.actions
 export default electronCacheSlice.reducer
