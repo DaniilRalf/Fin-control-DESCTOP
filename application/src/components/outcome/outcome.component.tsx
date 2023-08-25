@@ -5,13 +5,42 @@ import {Button, Input, Select} from "antd"
 import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
 import {ElectronEventsEnum, IncomeInterface, OutcomeInterface} from "common/dist"
 import {onlyNumber} from "../../helpers/only-number.directive";
+import {PieChart} from "react-minimal-pie-chart";
 
 const {Option} = Select
+
+const colorList = [
+    '#6699FF',
+    '#66CC99',
+    '#CC66FF',
+    '#888838',
+    '#af5c86',
+    '#FF6633',
+    '#597325',
+]
+
+enum typeOutcome {
+    different = "Прочие расходы",
+    food = "Еда",
+    beauty = "Красота",
+    closes = "Одежда",
+    taxi = "Такси",
+    transport = "Транспорт",
+    restaurant = "Рестораны",
+    present = "Подарки",
+    dog = "Собака",
+}
 
 const OutcomeComponent = () => {
 
     // const dispatch = useDispatch()
     const [outcomeList, setOutcomeList] = useState<OutcomeInterface[] | null>(null)
+
+    const [dataForGraph, setDataForGraph] = useState<{
+        title: string,
+        value: number,
+        color: string,
+        label: string}[]>([])
 
     const [allQuantity, setAllQuantity] = useState<number>(0) /** all outcome */
     const [allIncome, setAllIncome] = useState<number>(0) /** all income */
@@ -45,7 +74,29 @@ const OutcomeComponent = () => {
         if (outcomeList) {
             electronBusObject.electronEvents<OutcomeInterface[]>(ElectronEventsEnum.CacheOutcomeSave, outcomeList).then()
         }
+        generateDataForGraph()
     }, [outcomeList])
+
+    const generateDataForGraph = (): void => {
+        const newDataForGraph = outcomeList?.reduce((result: {
+            title: string,
+            value: number,
+            color: string,
+            label: string}[], item, index) => {
+                const existingItem = result.find((el) => el.title === item.type)
+                if (existingItem) {
+                    existingItem.value += Number(item.quantity);
+                } else {
+                    // @ts-ignore
+                    result.push({ title: item.type, value: item.quantity, label: typeOutcome[item.type], color: colorList[index]})
+                }
+                return result
+        }, [])
+        console.log(newDataForGraph)
+        if (newDataForGraph) {
+            setDataForGraph(newDataForGraph)
+        }
+    }
 
 
     const changeIncomeList = (
@@ -164,6 +215,7 @@ const OutcomeComponent = () => {
 
 
             <div className={style.outcome_body}>
+
                 <div className={style.outcome_body_add}>
                     <Button type="primary" shape="round"
                             icon={<AppstoreAddOutlined/>}
@@ -171,8 +223,40 @@ const OutcomeComponent = () => {
                     >Добавить расход</Button>
                     <p>{allQuantity}&nbsp;₽</p>
                 </div>
+
                 <div className={style.outcome_body_list}>
                     {constructIncomeList}
+                </div>
+
+                <div className={style.outcome_body_info}>
+                    {allQuantity && allIncome &&
+                        <div className={style.outcome_body_info_remain + ' heading_1'}>
+                            {allIncome} - {allQuantity} = {allIncome - allQuantity}&nbsp;₽
+                        </div>
+                    }
+                    {allQuantity && allIncome && (allIncome - allQuantity < 0) &&
+                        <div className={style.outcome_body_info_error + ' heading_1'}>
+                            Ваши расходы превышают доход!
+                        </div>
+                    }
+                    {allQuantity && allIncome && (allIncome - allQuantity > 0) &&
+                        <div className={style.outcome_body_info_graph}>
+                            <PieChart
+                                data={dataForGraph}
+                                lineWidth={80} /** процент радиуса графика */
+                                animate={true}
+                                animationDuration={700}
+                                label={({ dataEntry }) => dataEntry.label}
+                                labelStyle={{
+                                    fontSize: '3px',
+                                    fontWeight: 'bold',
+                                    fill: 'white',
+                                }}
+                                radius={49}
+                                segmentsShift={_index => (0.5)}
+                            />
+                        </div>
+                    }
                 </div>
             </div>
 
