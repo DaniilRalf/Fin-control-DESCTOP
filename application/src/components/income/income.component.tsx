@@ -4,6 +4,7 @@ import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
 import {useEffect, useState} from "react"
 import {electronBusObject} from "../../App"
 import {ElectronEventsEnum, IncomeInterface} from "common/dist"
+import {onlyNumber} from "../../helpers/only-number.directive";
 // import {useDispatch} from "react-redux"
 // import {setIncomeCache} from "../../store/slices/electron-cache.slice"
 
@@ -69,7 +70,9 @@ const IncomeComponent = (): JSX.Element => {
                     <Input value={item.owner} onChange={(event) => changeIncomeList(event.target.value, 'owner', index)}/></>
                 <>
                     <div className={style.income_body_list_item_desc}>сумма</div>
-                    <Input value={item.quantity} onChange={(event) => changeIncomeList(event.target.value, 'quantity', index)}/>
+                    <Input value={item.quantity}
+                           onKeyPress={onlyNumber}
+                           onChange={(event) => changeIncomeList(event.target.value, 'quantity', index)}/>
                 </>
                 <DeleteOutlined className={style.income_body_list_item_icon}
                                 onClick={() => removeIncomeList(index)}/>

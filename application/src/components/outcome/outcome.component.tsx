@@ -4,6 +4,7 @@ import {electronBusObject} from "../../App"
 import {Button, Input, Select} from "antd"
 import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
 import {ElectronEventsEnum, IncomeInterface, OutcomeInterface} from "common/dist"
+import {onlyNumber} from "../../helpers/only-number.directive";
 
 const {Option} = Select
 
@@ -92,7 +93,7 @@ const OutcomeComponent = () => {
             <Select onChange={(event) => {
                 onChangeTypeSelect(event, index)
             }}
-                    defaultValue="different">
+                    defaultValue={outcomeList ? outcomeList[index].type : 'different'}>
                 <Option value="different">Прочие расходы</Option>
                 <Option value="food">Еда</Option>
                 <Option value="beauty">Красота</Option>
@@ -121,7 +122,7 @@ const OutcomeComponent = () => {
             <Select onChange={(event: any) => {
                 onChangeQuantityTypeSelect(event, index)
             }}
-                    defaultValue="price">
+                    defaultValue={outcomeList ? outcomeList[index].typeQuantity : 'price'}>
                 <Option value="price">(фикс. сумма ₽)</Option>
                 <Option value="percent">(процент от дохода %)</Option>
             </Select>
@@ -141,6 +142,7 @@ const OutcomeComponent = () => {
                 <div className={style.outcome_body_list_item_block}>
                     <div className={style.outcome_body_list_item_block_desc}>число | процент</div>
                     <Input value={item.quantity}
+                           onKeyPress={onlyNumber}
                            onChange={(event) => changeIncomeList(event.target.value, 'quantity', index)}
                            addonAfter={constructQuantityTypeSelect(index)}/>
                 </div>
