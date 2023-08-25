@@ -1,9 +1,9 @@
-// const preloadApp = require('./preload')
+const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
-const {app, BrowserWindow, ipcMain} = require('electron')
 const {ElectronEventsEnum, CacheEventEnum} = require("common/dist")
 const ElectronStore = require('electron-store')
+// const preloadApp = require('./preload')
 
 const electronStore = new ElectronStore()
 
@@ -12,11 +12,14 @@ const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
+        icon: 'favicon.ico',
+        // frame: false,
+        // transparent: true,
         autoHideMenuBar: true, /** auto hidden settings-menu from top */
         webPreferences: {
             // preload: preloadApp(),
             nodeIntegration: true,
-            contextIsolation: false /** отключаем изоляцию от глобального обьекта window, теперь у него будет поле 'electron'*/
+            contextIsolation: false, /** отключаем изоляцию от глобального обьекта window, теперь у него будет поле 'electron'*/
         }
     })
 
@@ -40,12 +43,20 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
 
+
     /** events */
     ipcMain.handle(ElectronEventsEnum.CacheIncomeSave, async (_event: any, arg: any) => {
         electronStore.set(CacheEventEnum.Income, arg);
     })
     ipcMain.handle(ElectronEventsEnum.CacheIncomeGet, async (_event: any, _arg: any) => {
         return electronStore.get(CacheEventEnum.Income)
+    })
+
+    ipcMain.handle(ElectronEventsEnum.CacheOutcomeSave, async (_event: any, arg: any) => {
+        electronStore.set(CacheEventEnum.Outcome, arg);
+    })
+    ipcMain.handle(ElectronEventsEnum.CacheOutcomeGet, async (_event: any, _arg: any) => {
+        return electronStore.get(CacheEventEnum.Outcome)
     })
 })
 

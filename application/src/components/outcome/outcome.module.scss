@@ -5,10 +5,88 @@
 
   &_heading {
     margin-left: 5px;
+    margin-bottom: 35px;
   }
 
   &_body {
-    margin-left: 5px;
+
+    &_add {
+      margin-bottom: 35px;
+      display: flex;
+      align-items: center;
+
+      //Button custom==================================
+      button:global(.ant-btn) {
+        border: none;
+        font-size: 14px;
+        margin-right: 25px;
+
+        background: linear-gradient(315deg, #5b5e74, #4d4f61);
+        box-shadow:  -5px -5px 10px #515467,
+        5px 5px 10px #464957;
+      }
+
+      p {
+        font-size: 32px;
+        font-weight: bold;
+        margin: 0;
+        color: white;
+      }
+
+
+    }
+
+    &_list {
+
+      &_item {
+        width: 100%;
+        margin-bottom: 25px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+
+        &_block {
+          height: 65px;
+          width: 40%;
+          min-width: 182px;
+          margin-right: 25px;
+
+          &_desc {
+            width: 0; z-index: 10; margin: 0;
+            transform: translateY(-3px) translateX(5px);
+            white-space: nowrap;
+            font-size: 12px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.5);
+          }
+          input:global(.ant-input) {
+            color: white;
+            border: none;
+            font-size: 14px;
+            min-width: 110px;
+
+            background: linear-gradient(315deg, #6d708a, #55576b);
+            box-shadow:  -2px -2px 10px #515467,
+            5px 5px 10px #464957;
+          }
+          :global(span) {
+            color: white;
+          }
+          &_icon {
+            color: white!important;
+          }
+        }
+        &_block2 {
+          width: 18%;
+          min-width: 100px;
+        }
+
+
+
+      }
+    }
   }
 
 

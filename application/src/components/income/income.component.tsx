@@ -1,21 +1,23 @@
 import style from './income.module.scss'
 import {Button, Input} from "antd"
 import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
-import {ElectronEventsEnum, IncomeInterface} from "common/dist"
 import {useEffect, useState} from "react"
+import {electronBusObject} from "../../App"
+import {ElectronEventsEnum, IncomeInterface} from "common/dist"
 // import {useDispatch} from "react-redux"
 // import {setIncomeCache} from "../../store/slices/electron-cache.slice"
-import {electronBusObject} from "../../App";
 
 const IncomeComponent = (): JSX.Element => {
 
     // const dispatch = useDispatch()
-    const [incomeList, setIncomeList] = useState<IncomeInterface[]>([])
-    const [allQuantity, setAllQuantity] = useState<number>(0)
+    const [incomeList, setIncomeList] = useState<IncomeInterface[] | null>(null)
+    const [allQuantity, setAllQuantity] = useState<number>(0) /** all income */
 
     useEffect(() => {
         electronBusObject.electronEvents<null>(ElectronEventsEnum.CacheIncomeGet, null).then((res: IncomeInterface[]) => {
-            setIncomeList(res)
+            if (res) {
+                setIncomeList(res)
+            }
         })
     }, [])
 
@@ -35,7 +37,7 @@ const IncomeComponent = (): JSX.Element => {
 
 
     const changeIncomeList = (event: string, type: 'name' | 'owner' | 'quantity', index: number): void => {
-        const newIncomeList = [...incomeList]
+        const newIncomeList = [...incomeList || []]
         if (newIncomeList.length > 0) {
             // @ts-ignore
             newIncomeList[index][type] = event
@@ -43,24 +45,32 @@ const IncomeComponent = (): JSX.Element => {
         }
     }
     const addIncomeList = (): void => {
-        const newIncomeList = [...incomeList]
+        console.log(incomeList)
+        const newIncomeList = [...incomeList || []]
         newIncomeList.push({name: '', owner: '', quantity: 0})
         setIncomeList(newIncomeList)
     }
     const removeIncomeList = (index: number): void => {
-        const newIncomeList = [...incomeList]
+        const newIncomeList = [...incomeList || []]
         newIncomeList.splice(index, 1)
         setIncomeList(newIncomeList)
     }
 
 
-    const constructIncomeList: JSX.Element[] = incomeList.map((item: IncomeInterface, index: number) => {
+    const constructIncomeList: JSX.Element[] | any = incomeList?.map((item: IncomeInterface, index: number) => {
         return (
             <div className={style.income_body_list_item} key={index}>
-                <Input value={item.name} onChange={(event) => changeIncomeList(event.target.value, 'name', index)}/>
-                <Input value={item.owner} onChange={(event) => changeIncomeList(event.target.value, 'owner', index)}/>
-                <Input value={item.quantity}
-                       onChange={(event) => changeIncomeList(event.target.value, 'quantity', index)}/>
+                <>
+                    <div className={style.income_body_list_item_desc}>название дохода</div>
+                    <Input value={item.name} onChange={(event) => changeIncomeList(event.target.value, 'name', index)}/>
+                </>
+                <>
+                    <div className={style.income_body_list_item_desc}>владелец дохода</div>
+                    <Input value={item.owner} onChange={(event) => changeIncomeList(event.target.value, 'owner', index)}/></>
+                <>
+                    <div className={style.income_body_list_item_desc}>сумма</div>
+                    <Input value={item.quantity} onChange={(event) => changeIncomeList(event.target.value, 'quantity', index)}/>
+                </>
                 <DeleteOutlined className={style.income_body_list_item_icon}
                                 onClick={() => removeIncomeList(index)}/>
             </div>
