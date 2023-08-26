@@ -10,7 +10,8 @@ const electronStore = new ElectronStore()
 const createWindow = () => {
     /** Create the browser window */
     const mainWindow = new BrowserWindow({
-        width: 800,
+        width: 1100,
+        minWidth: 1100,
         height: 600,
         icon: 'favicon.ico',
         // frame: false,

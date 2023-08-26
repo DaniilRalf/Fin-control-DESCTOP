@@ -4,8 +4,8 @@ import {electronBusObject} from "../../App"
 import {Button, Input, Select} from "antd"
 import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
 import {ElectronEventsEnum, IncomeInterface, OutcomeInterface} from "common/dist"
-import {onlyNumber} from "../../helpers/only-number.directive";
-import {PieChart} from "react-minimal-pie-chart";
+import {onlyNumber} from "../../helpers/only-number.directive"
+import {PieChart} from "react-minimal-pie-chart"
 
 const {Option} = Select
 
@@ -17,6 +17,10 @@ const colorList = [
     '#af5c86',
     '#FF6633',
     '#597325',
+    '#205869',
+    '#5d2573',
+    '#732525',
+    '#2f7325',
 ]
 
 enum typeOutcome {
@@ -29,6 +33,8 @@ enum typeOutcome {
     restaurant = "Рестораны",
     present = "Подарки",
     dog = "Собака",
+    home = "Жилье",
+    learn = "Обучение",
 }
 
 const OutcomeComponent = () => {
@@ -85,10 +91,10 @@ const OutcomeComponent = () => {
             label: string}[], item, index) => {
                 const existingItem = result.find((el) => el.title === item.type)
                 if (existingItem) {
-                    existingItem.value += Number(item.quantity);
+                    existingItem.value += Number(item.allQuantity);
                 } else {
                     // @ts-ignore
-                    result.push({ title: item.type, value: item.quantity, label: typeOutcome[item.type], color: colorList[index]})
+                    result.push({ title: item.type, value: item.allQuantity, label: typeOutcome[item.type], color: colorList[index]})
                 }
                 return result
         }, [])
@@ -154,6 +160,8 @@ const OutcomeComponent = () => {
                 <Option value="restaurant">Рестораны</Option>
                 <Option value="present">Подарки</Option>
                 <Option value="dog">Собака</Option>
+                <Option value="home">Жилье</Option>
+                <Option value="learn">Обучение</Option>
             </Select>
         )
     }
@@ -207,6 +215,16 @@ const OutcomeComponent = () => {
         )
     })
 
+    const constructGraphCircleList: JSX.Element[] = dataForGraph?.map((item, index: number) => {
+        return (
+            <div key={index} style={{display: "flex", alignItems: 'center'}}>
+                <p style={{backgroundColor: item.color, width: '10px', height: '10px', marginRight: '20px', borderRadius: '5px'}}></p>
+                <b style={{marginRight: '15px'}}>{item.value}&nbsp;₽</b>
+                <p>{item.label}</p>
+            </div>
+        )
+    })
+
     return (
         <div className={style.outcome}>
 
@@ -231,7 +249,7 @@ const OutcomeComponent = () => {
                 <div className={style.outcome_body_info}>
                     {allQuantity && allIncome &&
                         <div className={style.outcome_body_info_remain + ' heading_1'}>
-                            {allIncome} - {allQuantity} = {allIncome - allQuantity}&nbsp;₽
+                            Остаток:&nbsp;&nbsp;{allIncome}&nbsp;₽<small>(доход)</small> - {allQuantity}&nbsp;₽<small>(расход)</small> = {allIncome - allQuantity}&nbsp;₽
                         </div>
                     }
                     {allQuantity && allIncome && (allIncome - allQuantity < 0) &&
@@ -241,20 +259,25 @@ const OutcomeComponent = () => {
                     }
                     {allQuantity && allIncome && (allIncome - allQuantity > 0) &&
                         <div className={style.outcome_body_info_graph}>
-                            <PieChart
-                                data={dataForGraph}
-                                lineWidth={80} /** процент радиуса графика */
-                                animate={true}
-                                animationDuration={700}
-                                label={({ dataEntry }) => dataEntry.label}
-                                labelStyle={{
-                                    fontSize: '3px',
-                                    fontWeight: 'bold',
-                                    fill: 'white',
-                                }}
-                                radius={49}
-                                segmentsShift={_index => (0.5)}
-                            />
+                            <div className={style.outcome_body_info_graph_circle}>
+                                <PieChart
+                                    data={dataForGraph}
+                                    lineWidth={80} /** процент радиуса графика */
+                                    animate={true}
+                                    animationDuration={700}
+                                    label={({ dataEntry }) => dataEntry.label}
+                                    labelStyle={{
+                                        fontSize: '3px',
+                                        fontWeight: 'bold',
+                                        fill: 'white',
+                                    }}
+                                    radius={49}
+                                    segmentsShift={_index => (0.5)}
+                                />
+                            </div>
+                            <div className={style.outcome_body_info_graph_desc}>
+                                {constructGraphCircleList}
+                            </div>
                         </div>
                     }
                 </div>

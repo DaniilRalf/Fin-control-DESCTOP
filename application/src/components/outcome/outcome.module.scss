@@ -1,7 +1,7 @@
 .outcome {
   height: calc(100vh - 40px);
   overflow-y: auto;
-  padding-left: 10px;
+  padding: 0 15px;
 
   &_heading {
     margin-left: 5px;
@@ -40,7 +40,6 @@
 
       &_item {
         width: 100%;
-        margin-bottom: 25px;
 
         display: flex;
         justify-content: space-between;
@@ -49,12 +48,12 @@
 
         &_block {
           height: 65px;
-          width: 40%;
+          width: 43%;
           min-width: 182px;
           margin-right: 25px;
 
           &_desc {
-            width: 0; z-index: 10; margin: 0;
+            width: 0; margin: 0;
             transform: translateY(0px) translateX(5px);
             white-space: nowrap;
             font-size: 12px;
@@ -76,10 +75,11 @@
           }
           &_icon {
             color: white!important;
+            margin: 0 20px;
           }
         }
         &_block2 {
-          width: 18%;
+          width: 12%;
           min-width: 100px;
         }
 
@@ -89,21 +89,33 @@
     }
 
     &_info {
+      margin-top: 25px;
 
       &_remain {
-        margin-left: 10px;
+
       }
       &_error {
         padding: 10px;
         border-radius: 10px;
-        background-color: rgba(255, 0, 0, 0.2);
+        background: linear-gradient(315deg, rgba(255, 0, 0, 0.07), rgba(255, 0, 0, 0.2))!important;
         color: white;
         margin-top: 10px;
       }
       &_graph {
-        width: 350px;
-        height: 350px;
         margin-top: 30px;
+        display: flex;
+
+        &_circle {
+          width: 350px;
+          height: 350px;
+        }
+        &_desc {
+          color: white;
+          margin-left: 50px;
+
+          display: flex;
+          flex-direction: column;
+        }
       }
 
     }
