@@ -9,3 +9,9 @@ start-dev-application:
 start-dev-electron:
 	cd electron && npm run build && cd build && ELECTRON_START_URL=$(DEV_START_URL) npm run start
 #END Development command=====================
+
+
+
+
+start-build-win-64:
+	cd electron && npm run build && cd build && npm run package-win

@@ -11,8 +11,8 @@ import type {MenuProps} from 'antd'
 import {Button, Menu} from 'antd'
 import TooltipComponent from "../../UI/popover/tooltipComponent"
 import {Route, Routes, useNavigate} from "react-router-dom"
-import IncomeComponent from "../income/income.component"
-import OutcomeComponent from "../outcome/outcome.component";
+import IncomeComponent from "./income/income.component"
+import OutcomeComponent from "./outcome/outcome.component";
 
 
 type MenuItem = Required<MenuProps>['items'][number]
@@ -36,7 +36,9 @@ function getItem(
 const items: MenuItem[] = [
     getItem('Доходы', '1', <ImportOutlined />),
     getItem('Расходы', '2', <ExportOutlined />),
-    getItem('Option 3', '3', <ContainerOutlined/>),
+    getItem('Аналитика месяцов', '3', <ContainerOutlined/>),
+    getItem('Option 3', '4', <ContainerOutlined/>),
+    getItem('Option 3', '5', <ContainerOutlined/>),
 ]
 
 

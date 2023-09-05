@@ -1,10 +1,10 @@
 import style from './outcome.module.scss'
 import {useEffect, useState} from "react"
-import {electronBusObject} from "../../App"
+import {electronBusObject} from "../../../App"
 import {Button, Input, Select} from "antd"
 import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
 import {ElectronEventsEnum, IncomeInterface, OutcomeInterface} from "common/dist"
-import {onlyNumber} from "../../helpers/only-number.directive"
+import {onlyNumber} from "../../../helpers/only-number.directive"
 import {PieChart} from "react-minimal-pie-chart"
 
 const {Option} = Select

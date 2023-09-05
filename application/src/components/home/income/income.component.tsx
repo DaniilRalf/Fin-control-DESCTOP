@@ -2,9 +2,10 @@ import style from './income.module.scss'
 import {Button, Input} from "antd"
 import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
 import {useEffect, useState} from "react"
-import {electronBusObject} from "../../App"
-import {ElectronEventsEnum, IncomeInterface} from "common/dist"
-import {onlyNumber} from "../../helpers/only-number.directive";
+import {electronBusObject} from "../../../App"
+// import {ElectronEventsEnum, IncomeInterface} from "common/dist/index"
+import {ElectronEventsEnum, IncomeInterface} from "common/dist";
+import {onlyNumber} from "../../../helpers/only-number.directive";
 // import {useDispatch} from "react-redux"
 // import {setIncomeCache} from "../../store/slices/electron-cache.slice"
 
