@@ -26,7 +26,7 @@ const createWindow = () => {
 
     /** Load the index.html or the local host */
     const startUrl = process.env.ELECTRON_START_URL || url.format({
-        pathname: path.join(__dirname, '../application/build/index.html'),
+        pathname: path.join(__dirname, '../../application/build/index.html'),
         protocol: 'file:',
         slashes: true
     })

@@ -6,6 +6,7 @@ import {AppstoreAddOutlined, DeleteOutlined} from "@ant-design/icons"
 import {ElectronEventsEnum, IncomeInterface, OutcomeInterface} from "common/dist"
 import {onlyNumber} from "../../../helpers/only-number.directive"
 import {PieChart} from "react-minimal-pie-chart"
+import OutcomeChipsComponent from "./outcome-chips/outcome-chips.component";
 
 const {Option} = Select
 
@@ -147,9 +148,7 @@ const OutcomeComponent = () => {
 
     const constructTypeSelect = (index: number): JSX.Element => {
         return (
-            <Select onChange={(event) => {
-                onChangeTypeSelect(event, index)
-            }}
+            <Select onChange={(event) => {onChangeTypeSelect(event, index)}}
                     defaultValue={outcomeList ? outcomeList[index].type : 'different'}>
                 <Option value="different">Прочие расходы</Option>
                 <Option value="food">Еда</Option>
@@ -178,9 +177,7 @@ const OutcomeComponent = () => {
 
     const constructQuantityTypeSelect = (index: number): JSX.Element => {
         return (
-            <Select onChange={(event: any) => {
-                onChangeQuantityTypeSelect(event, index)
-            }}
+            <Select onChange={(event: any) => {onChangeQuantityTypeSelect(event, index)}}
                     defaultValue={outcomeList ? outcomeList[index].typeQuantity : 'price'}>
                 <Option value="price">(фикс. сумма ₽)</Option>
                 <Option value="percent">(процент от дохода %)</Option>
@@ -230,6 +227,11 @@ const OutcomeComponent = () => {
 
 
             <div className={style.outcome_heading + ' heading_1'}>Источники расходов</div>
+
+
+            <div className={style.outcome_list}>
+                <OutcomeChipsComponent></OutcomeChipsComponent>
+            </div>
 
 
             <div className={style.outcome_body}>

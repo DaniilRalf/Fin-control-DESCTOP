@@ -12,6 +12,5 @@ start-dev-electron:
 
 
 
-
-start-build-win-64:
-	cd electron && npm run build && cd build && npm run package-win
+build-win-64:
+	cd electron && npm run package-win
